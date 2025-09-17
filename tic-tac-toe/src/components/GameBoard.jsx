@@ -22,7 +22,7 @@ export default function GameBoard({onSelectCell, turns}) {
         <ol id="game-board">
             {gameBoard.map((row, rowIndex)=><li key={rowIndex}>
                 <ol>
-                    {row.map((playerSymbol, cellIndex)=><li key={cellIndex}><button onClick={onSelectCell}>{playerSymbol}</button></li>)}
+                    {row.map((playerSymbol, cellIndex)=><li key={cellIndex}><button onClick={()=> onSelectCell(rowIndex, cellIndex)}>{playerSymbol}</button></li>)}
                 </ol>
             </li>)}
         </ol>

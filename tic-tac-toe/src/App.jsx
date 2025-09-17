@@ -14,9 +14,7 @@ function App() {
         currPlayer = 'O';
       }
       const updatedTurn = [{square:{row:rowIndex, cell:cellIndex},player: currPlayer },...prevTurn,]
-
       return updatedTurn;
-    
     });
     
   }
@@ -30,7 +28,7 @@ function App() {
         </ol>
         <GameBoard onSelectCell={handleSelectCell} activePlayerSymbol={activePlayer}  turns={gameTurn}/>
       </div>
-      <Log />
+      <Log turns={gameTurn} />
     </main>
   )
 }
