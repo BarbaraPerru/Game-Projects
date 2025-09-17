@@ -6,9 +6,19 @@ import { useState } from "react"
 function App() {
   const [gameTurn, setGameTurn] = useState([]);
   const [activePlayer, setActivePlayer] = useState('X');
-  function handleSelectCell() {
-    setActivePlayer((curActivePlayer)=> curActivePlayer=== 'X' ? 'O' : 'X');
-    setGameTurn((curGameTurn) => [...curGameTurn, 'X']);
+  function handleSelectCell(rowIndex, cellIndex) {
+    setActivePlayer((curActivePlayer)=> curActivePlayer = 'X' ? 'O' : 'X');
+    setGameTurn((prevTurn) =>{
+      let currPlayer = 'X';
+      if(prevTurn.length > 0 && prevTurn[0].player === 'X') {
+        currPlayer = 'O';
+      }
+      const updatedTurn = [{square:{row:rowIndex, cell:cellIndex},player: currPlayer },...prevTurn,]
+
+      return updatedTurn;
+    
+    });
+    
   }
 
   return (
@@ -18,7 +28,7 @@ function App() {
           <Player initialName="Player 1" symbol="X" isActive={activePlayer === 'X'}/>
           <Player initialName="Player 2" symbol="O" isActive={activePlayer === 'O'} />
         </ol>
-        <GameBoard onSelectCell={handleSelectCell} activePlayerSymbol={activePlayer} />
+        <GameBoard onSelectCell={handleSelectCell} activePlayerSymbol={activePlayer}  turns={gameTurn}/>
       </div>
       <Log />
     </main>
