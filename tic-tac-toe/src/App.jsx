@@ -4,7 +4,9 @@ import Log from "./components/Log"
 import { useState } from "react"
 import { WINNING_COMBINATIONS } from "./winning-combination.js"  
 import GameOver from "./components/GameOver.jsx"  
-const initialGameBoard = [[null,null,null],[null,null,null],[null,null,null]];
+const PLAYERS={'X': 'Player 1', 'O': 'Player 2'}
+const INITIAL_GAME_BOARD = [[null,null,null],[null,null,null],[null,null,null]];
+
 function deriveActivePlayer(gameTurn) {
   let currPlayer = 'X';
       if(gameTurn.length > 0 && gameTurn[0].player === 'X') {
@@ -12,18 +14,16 @@ function deriveActivePlayer(gameTurn) {
       }
       return currPlayer;
 }
-function App() {
-  const [players, setPlayers]= useState({'X': 'Player 1', 'O': 'Player 2'});
-  const [gameTurn, setGameTurn] = useState([]);
-  const activePlayer = deriveActivePlayer(gameTurn);
-
-  let gameBoard = [...initialGameBoard.map(array=>[...array])];
+function deriveGameBoard(gameTurn) {
+   let gameBoard = [...INITIAL_GAME_BOARD.map(array=>[...array])];
     for(const turn of gameTurn) {
         const {square, player} = turn;
         const {row, cell} = square;
         gameBoard[row][cell] = player;
     }
-
+    return gameBoard;
+}
+function deriveWinner(gameBoard, players) {
   let winner;
   for (const combination of WINNING_COMBINATIONS) {
     const firstSquareSymbol = gameBoard[combination[0].row][combination[0].cell];
@@ -34,6 +34,14 @@ function App() {
       winner = players[firstSquareSymbol];
     }
   }
+  return winner;
+}
+function App() {
+  const [players, setPlayers]= useState(PLAYERS);
+  const [gameTurn, setGameTurn] = useState([]);
+  const activePlayer = deriveActivePlayer(gameTurn);
+  const gameBoard = deriveGameBoard(gameTurn);
+  const winner = deriveWinner(gameBoard, players);
   const isDraw = gameTurn.length === 9 && !winner;
   function handleSelectCell(rowIndex, cellIndex) {
     
@@ -56,9 +64,9 @@ function App() {
     <main>
       <div id="game-container">
         <ol id="players" className="highlight-player">
-          <Player initialName="Player 1" symbol="X" isActive={activePlayer === 'X'}
+          <Player initialName={PLAYERS.X} symbol="X" isActive={activePlayer === 'X'}
           onEditPlayerName={handleEditPlayerName}/>
-          <Player initialName="Player 2" symbol="O" isActive={activePlayer === 'O'}
+          <Player initialName={PLAYERS.O} symbol="O" isActive={activePlayer === 'O'}
           onEditPlayerName={handleEditPlayerName} />
         </ol>
         {(winner || isDraw) && <GameOver winner={winner} onRematch={handleRemach}/>}
