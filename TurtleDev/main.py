@@ -129,3 +129,25 @@ def run_game():
             y = s[i - 1].ycor()
             s[i].goto(x, y)
         s[0].forward(20)
+
+        # Eat food
+        if s[0].distance(food) < 15:
+            new_segment = Turtle()
+            new_segment.shape(previous_food_icon)
+            new_segment.penup()
+            new_segment.goto(s[-1].xcor(), s[-1].ycor())
+            s.append(new_segment)
+
+            food.goto(randint(-280, 280), randint(-280, 280))
+
+            if not unused_icons:
+                unused_icons = language_icons.copy()
+
+            current_food_icon = choice(unused_icons)
+            unused_icons.remove(current_food_icon)
+            food.shape(current_food_icon)
+            previous_food_icon = current_food_icon
+
+            language_name = language_icons_names.get(current_food_icon, "Unknown")
+            score.clear()
+            score.write(language_name, align="center", font=("Courier", 20, "bold"))
