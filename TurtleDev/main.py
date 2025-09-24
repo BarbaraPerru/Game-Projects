@@ -25,7 +25,7 @@ def restart_game():
     screen.clear()# Clear all 
     screen.tracer(0)
     screen.listen()
-    run_game() # Restart the game from scratch , Restart logic of the game
+    run_game()
 def run_game():
     global screen
 
@@ -186,3 +186,6 @@ def run_game():
             if segment.distance(s[0]) < 10:
                 start = False
                 game_over()
+
+run_game()
+screen.exitonclick()        
