@@ -11,3 +11,63 @@ def run_game():
     screen.bgcolor("#e0f7fa")
     screen.title("SnakeDev Game")
     screen.tracer(0)
+
+    # Snake setup
+    position = [(0, 0), (-20, 0), ]
+    s = []
+    snake_colors = ["#00796b", "#004d40", "#26a69a"]
+    for index, pos in enumerate(position):
+        segment = Turtle("circle")
+        segment.shapesize(stretch_wid=0.8, stretch_len=1.5)
+        segment.color(snake_colors[index % len(snake_colors)])
+        segment.penup()
+        segment.goto(pos)
+        s.append(segment)
+
+    # Draw border
+    border = Turtle()
+    border.hideturtle()
+    border.penup()
+    border.pensize(4)
+    border.color("gray")
+    border.goto(-290, 290)
+    border.pendown()
+    for _ in range(4):
+        border.forward(580)
+        border.right(90)
+    
+    # Icons
+    language_icons = [
+    "images/boot.gif", "images/css.gif", "images/html.gif", "images/java.gif", "images/js.gif", "images/php.gif",
+    "images/py.gif", "images/sql.gif", "images/maven.gif", "images/lara.gif", "images/mariadb.gif",
+    "images/mysql.gif", "images/spring.gif", "images/tailwind.gif", "images/thyme.gif", "images/github.gif",
+    "images/bash.gif", "images/tableplus.gif", "images/postman.gif", "images/vsc.gif"
+    ]
+
+    language_icons_names = {
+    "images/boot.gif": "Bootstrap",
+    "images/css.gif": "CSS3",
+    "images/html.gif": "HTML5",
+    "images/java.gif": "Java",
+    "images/js.gif": "JavaScript",
+    "images/php.gif": "PHP",
+    "images/py.gif": "Python",
+    "images/sql.gif": "SQL",
+    "images/maven.gif": "Maven",
+    "images/lara.gif": "Laravel",
+    "images/mariadb.gif": "MariaDB",
+    "images/mysql.gif": "MySQL",
+    "images/spring.gif": "Spring",
+    "images/tailwind.gif": "TailwindCSS",
+    "images/thyme.gif": "Thymeleaf",
+    "images/github.gif": "GitHub",
+    "images/bash.gif": "Git Bash",
+    "images/tableplus.gif": "TablePlus",
+    "images/postman.gif": "Postman",
+    "images/vsc.gif": "Visual Studio Code"  
+    }
+
+    for icon in language_icons:
+        screen.addshape(icon)
+
+    unused_icons = language_icons.copy()
