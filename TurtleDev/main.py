@@ -151,3 +151,17 @@ def run_game():
             language_name = language_icons_names.get(current_food_icon, "Unknown")
             score.clear()
             score.write(language_name, align="center", font=("Courier", 20, "bold"))
+
+        # Wall collision
+        if (
+            s[0].xcor() > 280 or s[0].xcor() < -280 or
+            s[0].ycor() > 280 or s[0].ycor() < -280
+        ):
+            start = False
+            game_over()
+
+        # Self collision
+        for segment in s[1:]:
+            if segment.distance(s[0]) < 10:
+                start = False
+                game_over()
