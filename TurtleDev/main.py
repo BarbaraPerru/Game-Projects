@@ -5,6 +5,27 @@ from random import randint, choice
 
 # Create global screen
 screen = Screen()
+
+# Game over function
+def game_over():
+    end = Turtle()
+    end.penup()
+    end.hideturtle()
+    end.color("red")
+    end.write("GAME OVER\nPress 'R' to restart\nOR\nPress 'E' to exit", align="center", font=("Courier", 24, "bold"))
+
+    screen.listen("R")
+    screen.onkey(restart_game, "R")  # Press 'R' to restart
+
+    screen.listen("E")
+    screen.onkey(screen.bye, "E")  # Press 'ESC' to exit
+
+# Restart the game
+def restart_game():
+    screen.clear()# Clear all 
+    screen.tracer(0)
+    screen.listen()
+    run_game() # Restart the game from scratch , Restart logic of the game
 def run_game():
     global screen
 
