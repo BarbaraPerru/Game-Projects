@@ -109,3 +109,23 @@ def run_game():
     def right():
         if s[0].heading() != 180:
             s[0].setheading(0)
+
+    # Keyboard
+    screen.listen()
+    screen.onkey(up, "Up")
+    screen.onkey(down, "Down")
+    screen.onkey(left, "Left")
+    screen.onkey(right, "Right")
+
+    # Game loop
+    start = True
+    while start:
+        screen.update()
+        sleep(0.2)
+
+        # Move snake
+        for i in range(len(s) - 1, 0, -1):
+            x = s[i - 1].xcor()
+            y = s[i - 1].ycor()
+            s[i].goto(x, y)
+        s[0].forward(20)
