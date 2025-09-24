@@ -1,4 +1,6 @@
 from turtle  import Turtle, Screen
+from time import sleep
+from random import randint, choice
 
 
 # Create global screen
@@ -71,3 +73,12 @@ def run_game():
         screen.addshape(icon)
 
     unused_icons = language_icons.copy()
+
+    # Food
+    food = Turtle()
+    food.penup()
+    current_food_icon = choice(unused_icons)
+    unused_icons.remove(current_food_icon)
+    food.shape(current_food_icon)
+    food.goto(randint(-280, 280), randint(-280, 280))
+    previous_food_icon = current_food_icon
