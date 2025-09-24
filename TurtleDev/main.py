@@ -82,3 +82,30 @@ def run_game():
     food.shape(current_food_icon)
     food.goto(randint(-280, 280), randint(-280, 280))
     previous_food_icon = current_food_icon
+
+    # Score
+    score = Turtle()
+    score.penup()
+    score.hideturtle()
+    score.goto(0, 240)
+    score.color("black")
+    score.clear()
+    language_name = language_icons_names.get(current_food_icon, "Unknown")
+    score.write(language_name, align="center", font=("Courier", 20, "bold"))
+
+    # Movement
+    def up():
+        if s[0].heading() != 270:
+            s[0].setheading(90)
+
+    def down():
+        if s[0].heading() != 90:
+            s[0].setheading(270)
+
+    def left():
+        if s[0].heading() != 0:
+            s[0].setheading(180)
+
+    def right():
+        if s[0].heading() != 180:
+            s[0].setheading(0)
