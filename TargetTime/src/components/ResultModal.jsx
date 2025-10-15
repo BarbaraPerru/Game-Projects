@@ -4,7 +4,7 @@ export default function ResultModal({ref, targetTime, remainTime, onReset, isMan
     const dialog=useRef();
     const formattedRemainTime=(remainTime/1000).toFixed(2);
     const score=Math.round((1 - remainTime/(targetTime*1000))*100);
-    const userLost = !isManuallyStopped && remainTime <= 0;
+    const userWin = isManuallyStopped && remainTime === 0.0;
     useImperativeHandle(ref, () => {
         return {
             open() {
@@ -14,20 +14,26 @@ export default function ResultModal({ref, targetTime, remainTime, onReset, isMan
     });
     return (
         <dialog ref={dialog} className="result-modal">
-            {userLost && <h2>Well Done!</h2>}
-            {!userLost && <h2>Ran out of time</h2>}
-            <p>
-                Your score is 
-                <strong> {score}</strong>
-            </p>
-            <p>
-                You targed time with 
-                <strong> {targetTime} seconds.</strong>
-            </p>
-            <p>
-                You stopped at 
-                <strong> {formattedRemainTime} seconds</strong>
-            </p>
+            <h2>{userWin ? "You are a Time Master" : "Time ran out"}</h2>
+            {isManuallyStopped && (
+                <>
+                    <p>
+                        Your score is 
+                        <strong> {score}</strong>
+                    </p>
+                    <p>
+                        You targeted time with 
+                        <strong> {targetTime} seconds.</strong>
+                    </p>
+                    <p>
+                        You stopped at 
+                        <strong> {formattedRemainTime} seconds</strong>
+                    </p>
+                </>
+            )}
+
+            {!isManuallyStopped && <p>You didn't stop the timer</p>}
+
             <form method="dialog" onSubmit={onReset}>
                 <button>Close</button>
             </form>
