@@ -1,10 +1,10 @@
 import { useImperativeHandle, useRef } from "react";
 
-export default function ResultModal({ref, targetTime, remainTime, onReset}) {
+export default function ResultModal({ref, targetTime, remainTime, onReset, isManuallyStopped}) {
     const dialog=useRef();
-    const userLost = remainTime > 0;
     const formattedRemainTime=(remainTime/1000).toFixed(2);
     const score=Math.round((1 - remainTime/(targetTime*1000))*100);
+    const userLost = !isManuallyStopped && remainTime <= 0;
     useImperativeHandle(ref, () => {
         return {
             open() {
@@ -14,8 +14,8 @@ export default function ResultModal({ref, targetTime, remainTime, onReset}) {
     });
     return (
         <dialog ref={dialog} className="result-modal">
-            {userLost && <h2>TIME RAN OUT</h2>}
-            {!userLost && <h2>Well Done!</h2>}
+            {userLost && <h2>Well Done!</h2>}
+            {!userLost && <h2>Ran out of time</h2>}
             <p>
                 Your score is 
                 <strong> {score}</strong>
