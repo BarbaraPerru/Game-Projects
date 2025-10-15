@@ -4,26 +4,34 @@ import ResultModal from './ResultModal';
 export default function TimerChallenge({title, targetTime}) {
     const timer=useRef();
     const dialog=useRef();
-    const [timeRemaining, setTimeRemaining] = useState(targetTime*1000);
-    const timerIsActive=timeRemaining > 0 &&timeRemaining < targetTime*1000;
+    
+    const [timeRemaining, setTimeRemaining] = useState(targetTime * 1000);
+    
+    const timerIsActive = timeRemaining > 0 && timeRemaining < targetTime*1000;
+
     if(timeRemaining <= 0) {
         clearInterval(timer.current);
-        setTimeRemaining(targetTime*1000);
         dialog.current.open();
     }
-    const timeStarted = timerIsActive;
+
+    function resetTimer(){
+        setTimeRemaining(targetTime * 1000);
+    }
+
     function handleStartGame(){
         timer.current= setInterval(() => {
             setTimeRemaining(prevTime => prevTime - 10);
         }, 10);
     }
+
     function handleStopGame(){
         dialog.current.open();
         clearInterval(timer.current);
     }
+
     return (
         <> 
-        <ResultModal ref={dialog} targetTime={targetTime} result="Time's ran out" />
+        <ResultModal ref={dialog} targetTime={targetTime} remainTime={timeRemaining} onReset={resetTimer} />
         <section className="challenge">
             <h2>{title}</h2>
             <p className="challenge-time">
