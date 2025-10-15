@@ -2,14 +2,11 @@ import { useState, useRef } from 'react';
 
 export default function Player() {
   const input=useRef();
-  const [enteredPlayerName, setEnteredPlayerName] = useState('');
-  const [submittedPlayerName, setSubmittedPlayerName] = useState('');
-  function handleSetPlayerName(event) {
-    setSubmittedPlayerName(false);
-    setEnteredPlayerName(event.target.value);
-  }
+  const [enteredPlayerName, setEnteredPlayerName] = useState(null);
+
   function handleClick(){
     setEnteredPlayerName(input.current.value);
+    input.current.value='';
    }
   return (
     <section id="player">
